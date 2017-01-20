@@ -1,6 +1,6 @@
 Package: tidyverse
 Title: Easily Install and Load 'Tidyverse' Packages
-Version: 1.0.0
+Version: 1.1.0
 Authors@R: c(
     person("Hadley", "Wickham", , "hadley@rstudio.com", role = c("aut", "cre")),
     person("RStudio", role = "cph")
@@ -10,21 +10,21 @@ Description: The 'tidyverse' is a set of packages that work in harmony
     package is designed to make it easy to install and load multiple
     'tidyverse' packages in a single step. Learn more about the 'tidyverse'
     at <https://github.com/hadley/tidyverse>.
-Imports: broom, DBI, dplyr, forcats, ggplot2, haven, httr, hms,
+Imports: broom, dplyr, feather, forcats, ggplot2, haven, httr, hms,
         jsonlite, lubridate, magrittr, modelr, purrr, readr, readxl,
         stringr, tibble, rvest, tidyr, xml2
-License: GPL-3
+License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 5.0.1.9000
-URL: https://github.com/hadley/tidyverse
-BugReports: https://github.com/hadley/tidyverse/issues
+URL: http://tidyverse.org, https://github.com/tidyverse/tidyverse
+BugReports: https://github.com/tidyverse/tidyverse/issues
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2016-09-09 14:11:10 UTC; hadley
+Packaged: 2017-01-19 23:28:49 UTC; hadley
 Author: Hadley Wickham [aut, cre],
   RStudio [cph]
 Maintainer: Hadley Wickham <hadley@rstudio.com>
 Repository: CRAN
-Date/Publication: 2016-09-09 18:07:46
+Date/Publication: 2017-01-20 10:49:42

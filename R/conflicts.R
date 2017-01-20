@@ -30,7 +30,7 @@ tidyverse_conflicts <- function() {
     confirm_conflict)
   conflict_funs <- purrr::compact(conflict_funs)
 
-  rule("Conflicts with tidy packages")
+  rule("Conflicts with tidy packages", startup = TRUE)
   fun <- format(paste0(names(conflict_funs), "(): "))
   pkg <- conflict_funs %>%
     purrr::map(~ gsub("^package:", "", .)) %>%
@@ -45,7 +45,8 @@ confirm_conflict <- function(name, packages) {
   objs <- packages %>%
     purrr::map(~ get(name, pos = .)) %>%
     purrr::keep(is.function)
-  if (length(objs) == 1)
+
+  if (length(objs) <= 1)
     return()
 
   # Remove identical functions

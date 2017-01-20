@@ -12,7 +12,7 @@
 
 <meta name="author" content="Hadley Wickham" />
 
-<meta name="date" content="2016-09-09" />
+<meta name="date" content="2017-01-19" />
 
 <title>The tidy tools manifesto</title>
 
@@ -32,12 +32,12 @@
 
 <h1 class="title toc-ignore">The tidy tools manifesto</h1>
 <h4 class="author"><em>Hadley Wickham</em></h4>
-<h4 class="date"><em>2016-09-09</em></h4>
+<h4 class="date"><em>2017-01-19</em></h4>
 
 
 
 <p>This document lays out the consistent principles that unify the packages in the tidyverse. The goal of these principles is to provide a uniform interface so that tidyverse packages work together naturally, and once you’ve mastered one, you have a head start on mastering the others.</p>
-<p>This is my first attempt at writing down these principles. That means that this manifesto is both aspirational and likely to change heavily in the future. Currently no pacakges precisely meet the design goals, and while the underlying ideas are stable, I expect their expression in prose will change substantially as I struggle to make explicit my process and thinking.</p>
+<p>This is my first attempt at writing down these principles. That means that this manifesto is both aspirational and likely to change heavily in the future. Currently no packages precisely meet the design goals, and while the underlying ideas are stable, I expect their expression in prose will change substantially as I struggle to make explicit my process and thinking.</p>
 <p>There are many other excellent packages that are not part of the tidyverse, because they are designed with a different set of underlying principles. This doesn’t make them better or worse, just different. In other words, the complement to the tidyverse is not the <strong>messy</strong>verse, but many other universes of interrelated packages.</p>
 <p>There are four basic principles to a tidy API:</p>
 <ol style="list-style-type: decimal">
@@ -60,17 +60,17 @@
 <p>— Hal Abelson</p>
 </blockquote>
 <p>A powerful strategy for solving complex problems is to combine many simple pieces. Each piece should be easily understood in isolation, and have a standard way to combine with other pieces. In R, this strategy plays out by composing single functions with the pipe. The pipe, <code>%&gt;%</code>, is a common composition tool that works across all packages.</p>
-<p>Some things to bare in mind when writing functions:</p>
+<p>Some things to bear in mind when writing functions:</p>
 <ul>
 <li><p>Strive to keep functions as simple as possible (but no simpler!). Generally, each function should do one thing well, and you should be able to describe the purpose of the function in one sentence.</p></li>
 <li><p>Avoid mixing side-effects with transformations. Ensure each function either returns an object, or has a side-effect. Don’t do both. (This is a slight simplification: functions called primarily for their side-effects should return the primary input invisibly so that they can still be combined in a pipeline.)</p></li>
 <li><p>Function names should be verbs. The exception is when many functions use the same verb (typically something like “modify”, or “add”, or “compute”). In that case, avoid duplicating the common verb, and instead focus on the noun. A good example of this is ggplot2: almost every function adds something to an existing plot.</p></li>
 </ul>
-<p>An advantage of a pipeable API is is not compulsory: if you do not like using the pipe, you can compose functions in whatever way you prepare. Compare this to an operator-overloading approach (such as the <code>+</code> in ggplot2), or an object composition approach (such as the <code>...</code> approach in httr).</p>
+<p>An advantage of a pipeable API is that it is not compulsory: if you do not like using the pipe, you can compose functions in whatever way you prepare. Compare this to an operator-overloading approach (such as the <code>+</code> in ggplot2), or an object composition approach (such as the <code>...</code> approach in httr).</p>
 </div>
 <div id="embrace-functional-programming" class="section level2">
 <h2>Embrace functional programming</h2>
-<p>R is a functional programming language; embrace it, don’t fight it. If you’re familiar with an object-oriented language like Python or C#, this is going to take some adjustment. But in the long run you will be much better of working with the language rather than fighting it.</p>
+<p>R is a functional programming language; embrace it, don’t fight it. If you’re familiar with an object-oriented language like Python or C#, this is going to take some adjustment. But in the long run you will be much better off working with the language rather than fighting it.</p>
 <p>Generally, this means you should favour:</p>
 <ul>
 <li><p>Immutable objects and copy-on-modify semantics. This makes your code easier to reason about.</p></li>

@@ -3,7 +3,7 @@
 tidyverse
 =========
 
-[![Travis-CI Build Status](https://travis-ci.org/hadley/tidyverse.svg?branch=master)](https://travis-ci.org/hadley/tidyverse)
+[![Travis-CI Build Status](https://travis-ci.org/tidyverse/tidyverse.svg?branch=master)](https://travis-ci.org/tidyverse/tidyverse)
 
 The tidyverse is a set of packages that work in harmony because they share common data representations and API design. The **tidyverse** package is designed to make it easy to install and load core packages from the tidyverse in a single command.
 
@@ -11,6 +11,12 @@ If you'd like to learn how to use the tidyverse effectively, the best place to s
 
 Installation
 ------------
+
+tidyverse is available from CRAN. Install it with:
+
+``` r
+install.packages("tidyverse")
+```
 
 You can install tidyverse from github with:
 
