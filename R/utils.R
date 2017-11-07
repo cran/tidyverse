@@ -1,21 +1,23 @@
-bullets <- function(...) {
-  message(paste0(" * ", ..., collapse = "\n"))
+msg <- function(..., startup = FALSE) {
+  if (startup) {
+    if (!isTRUE(getOption("tidyverse.quiet"))) {
+      packageStartupMessage(text_col(...))
+    }
+  } else {
+    message(text_col(...))
+  }
 }
 
-rule <- function(..., pad = "-", startup = FALSE) {
-  if (nargs() == 0) {
-    title <- ""
-  } else {
-    title <- paste0(...)
+text_col <- function(x) {
+  # If RStudio not available, messages already printed in black
+  if (!rstudioapi::isAvailable()) {
+    return(x)
   }
-  width <- getOption("width") - nchar(title) - 1
-  text <- paste0(title, " ", paste(rep(pad, width), collapse = ""))
 
-  if (startup) {
-    packageStartupMessage(text)
-  } else {
-    message(text)
-  }
+  theme <- rstudioapi::getThemeInfo()
+
+  if (theme$dark) crayon::white(x) else crayon::black(x)
+
 }
 
 #' List all packages in the tidyverse
@@ -40,4 +42,12 @@ invert <- function(x) {
   if (length(x) == 0) return()
   stacked <- utils::stack(x)
   tapply(as.character(stacked$ind), stacked$values, list)
+}
+
+
+style_grey <- function(level, ...) {
+  crayon::style(
+    paste0(...),
+    crayon::make_style(grDevices::grey(level), grey = TRUE)
+  )
 }

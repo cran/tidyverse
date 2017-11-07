@@ -1,17 +1,13 @@
-load <- c("ggplot2", "tibble", "tidyr", "readr", "purrr", "dplyr")
-
 .onAttach <- function(...) {
-  needed <- load[!is_attached(load)]
-
+  needed <- core[!is_attached(core)]
   if (length(needed) == 0)
     return()
 
-  packageStartupMessage(paste0("Loading tidyverse: ", needed, collapse = "\n"))
-  suppressPackageStartupMessages(
-    lapply(needed, library, character.only = TRUE, warn.conflicts = FALSE)
-  )
+  crayon::num_colors(TRUE)
+  tidyverse_attach()
 
-  tidyverse_conflicts()
+  x <- tidyverse_conflicts()
+  msg(tidyverse_conflict_message(x), startup = TRUE)
 }
 
 is_attached <- function(x) {

@@ -17,25 +17,19 @@ tidyverse_update <- function(recursive = FALSE) {
   behind <- dplyr::filter(deps, behind)
 
   if (nrow(behind) == 0) {
-    message("All tidyverse packages up-to-date")
+    cli::cat_line("All tidyverse packages up-to-date")
     return(invisible())
   }
 
-  message("The following packages are out of date:")
-  bullets(format(behind$package), " (", behind$local, " -> ", behind$cran, ")")
+  cli::cat_line("The following packages are out of date:")
+  cli::cat_line()
+  cli::cat_bullet(format(behind$package), " (", behind$local, " -> ", behind$cran, ")")
 
-  message("Update now?")
-  do_it <- utils::menu(c("Yes", "No")) == 1
+  cli::cat_line()
+  cli::cat_line("Start a clean R session then run:")
 
-  if (!do_it) {
-    return(invisible())
-  }
-
-  utils::install.packages(
-    behind$package,
-    quiet = TRUE,
-    dependencies = if (recursive) FALSE else NA
-  )
+  pkg_str <- paste0(deparse(behind$package), collapse = "\n")
+  cli::cat_line("install.packages(", pkg_str, ")")
 
   invisible()
 }
@@ -58,7 +52,7 @@ tidyverse_deps <- function(recursive = FALSE) {
   )
   pkg_deps <- setdiff(pkg_deps, base_pkgs)
 
-  cran_version <- lapply(pkgs[pkg_deps, "Version"], package_version)
+  cran_version <- lapply(pkgs[pkg_deps, "Version"], base::package_version)
   local_version <- lapply(pkg_deps, utils::packageVersion)
 
   behind <- purrr::map2_lgl(cran_version, local_version, `>`)

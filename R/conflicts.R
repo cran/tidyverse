@@ -12,35 +12,51 @@
 #' @examples
 #' tidyverse_conflicts()
 tidyverse_conflicts <- function() {
+  envs <- purrr::set_names(search())
+  objs <- invert(lapply(envs, ls_env))
+
+  conflicts <- purrr::keep(objs, ~ length(.x) > 1)
+
   tidy_names <- paste0("package:", tidyverse_packages())
+  conflicts <- purrr::keep(conflicts, ~ any(.x %in% tidy_names))
 
-  tidy_envs <- intersect(tidy_names, search())
-  names(tidy_envs) <- tidy_envs
-
-  misc_envs <- setdiff(search(), tidy_envs)
-  names(misc_envs) <- misc_envs
-
-  tidy_funs <- invert(lapply(tidy_envs, ls_env))
-  misc_funs <- invert(lapply(misc_envs, ls_env))
-
-  conflicts <- intersect(names(tidy_funs), names(misc_funs))
-
-  conflict_funs <- purrr::map2(tidy_funs[conflicts], misc_funs[conflicts], c)
-  conflict_funs <- purrr::map2(purrr::set_names(names(conflict_funs)), conflict_funs,
-    confirm_conflict)
+  conflict_funs <- purrr::imap(conflicts, confirm_conflict)
   conflict_funs <- purrr::compact(conflict_funs)
 
-  rule("Conflicts with tidy packages", startup = TRUE)
-  fun <- format(paste0(names(conflict_funs), "(): "))
-  pkg <- conflict_funs %>%
-    purrr::map(~ gsub("^package:", "", .)) %>%
-    purrr::map_chr(paste0, collapse = ", ")
+  structure(conflict_funs, class = "tidyverse_conflicts")
+}
 
-  packageStartupMessage(paste0(fun, pkg, collapse = "\n"))
+tidyverse_conflict_message <- function(x) {
+  header <- cli::rule(
+    left = crayon::bold("Conflicts"),
+    right = "tidyverse_conflicts()"
+  )
+
+  pkgs <- x %>% purrr::map(~ gsub("^package:", "", .))
+  others <- pkgs %>% purrr::map(`[`, -1)
+  other_calls <- purrr::map2_chr(
+    others, names(others),
+    ~ paste0(crayon::blue(.x), "::", .y, "()", collapse = ", ")
+  )
+
+  winner <- pkgs %>% purrr::map_chr(1)
+  funs <- format(paste0(crayon::blue(winner), "::", crayon::green(paste0(names(x), "()"))))
+  bullets <- paste0(
+    crayon::red(cli::symbol$cross), " ", funs,
+    " masks ", other_calls,
+    collapse = "\n"
+  )
+
+  paste0(header, "\n", bullets)
+}
+
+#' @export
+print.tidyverse_conflicts <- function(x, ..., startup = FALSE) {
+  cli::cat_line(tidyverse_conflict_message(x))
 }
 
 #' @importFrom magrittr %>%
-confirm_conflict <- function(name, packages) {
+confirm_conflict <- function(packages, name) {
   # Only look at functions
   objs <- packages %>%
     purrr::map(~ get(name, pos = .)) %>%
