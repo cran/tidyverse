@@ -1,9 +1,15 @@
+# tidyverse 1.2.1
+
+* Require modern versions of all packages (#85)
+
+* Work with RStudio 1.0 and earlier (#88).
+
 # tidyverse 1.2.0
 
 ## Changes to tidyverse membership
 
-* stringr is now part of the core tidyverse, so is attached when you 
-  `library(tidyverse)`.
+* stringr and forcats have been added to the core tidyverse, so they are
+  attached by `library(tidyverse)`.
 
 * reprex joins the tidyverse to make it easier to create reproducible
   examples (#47)
