@@ -9,7 +9,7 @@
 status](https://www.r-pkg.org/badges/version/tidyverse)](https://cran.r-project.org/package=tidyverse)
 [![R-CMD-check](https://github.com/tidyverse/tidyverse/workflows/R-CMD-check/badge.svg)](https://github.com/tidyverse/tidyverse/actions)
 [![Codecov test
-coverage](https://codecov.io/gh/tidyverse/tidyverse/branch/master/graph/badge.svg)](https://codecov.io/gh/tidyverse/tidyverse?branch=master)
+coverage](https://codecov.io/gh/tidyverse/tidyverse/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidyverse/tidyverse?branch=main)
 <!-- badges: end -->
 
 ## Overview
@@ -52,14 +52,14 @@ have loaded:
 
 ``` r
 library(tidyverse)
-#> ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
-#> ✓ ggplot2 3.3.3     ✓ purrr   0.3.4
-#> ✓ tibble  3.1.0     ✓ dplyr   1.0.5
-#> ✓ tidyr   1.1.3     ✓ stringr 1.4.0
-#> ✓ readr   1.4.0     ✓ forcats 0.5.1
+#> ── Attaching packages ────────────────────────────────── tidyverse 1.3.1.9000 ──
+#> ✔ ggplot2 3.3.6     ✔ purrr   0.3.4
+#> ✔ tibble  3.1.7     ✔ dplyr   1.0.9
+#> ✔ tidyr   1.2.0     ✔ stringr 1.4.0
+#> ✔ readr   2.1.2     ✔ forcats 0.5.1
 #> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-#> x dplyr::filter() masks stats::filter()
-#> x dplyr::lag()    masks stats::lag()
+#> ✖ dplyr::filter() masks stats::filter()
+#> ✖ dplyr::lag()    masks stats::lag()
 ```
 
 You can see conflicts created later with `tidyverse_conflicts()`:
@@ -73,9 +73,9 @@ library(MASS)
 #>     select
 tidyverse_conflicts()
 #> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-#> x dplyr::filter() masks stats::filter()
-#> x dplyr::lag()    masks stats::lag()
-#> x MASS::select()  masks dplyr::select()
+#> ✖ dplyr::filter() masks stats::filter()
+#> ✖ dplyr::lag()    masks stats::lag()
+#> ✖ MASS::select()  masks dplyr::select()
 ```
 
 And you can check that all tidyverse packages are up-to-date with

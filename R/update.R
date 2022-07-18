@@ -20,7 +20,9 @@ tidyverse_update <- function(recursive = FALSE, repos = getOption("repos")) {
     return(invisible())
   }
 
-  cli::cat_line("The following packages are out of date:")
+  cli::cat_line(cli::pluralize(
+    "The following {cli::qty(nrow(behind))}package{?s} {?is/are} out of date:"
+  ))
   cli::cat_line()
   cli::cat_bullet(format(behind$package), " (", behind$local, " -> ", behind$cran, ")")
 
@@ -67,7 +69,7 @@ tidyverse_sitrep <- function() {
 #' @param recursive If \code{TRUE}, will also list all dependencies of
 #'   tidyverse packages.
 #' @param repos The repositories to use to check for updates.
-#'   Defaults to \code{getOptions("repos")}.
+#'   Defaults to \code{getOption("repos")}.
 #' @export
 tidyverse_deps <- function(recursive = FALSE, repos = getOption("repos")) {
   pkgs <- utils::available.packages(repos = repos)
