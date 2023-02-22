@@ -12,7 +12,7 @@
 
 <meta name="author" content="Hadley Wickham" />
 
-<meta name="date" content="2022-07-06" />
+<meta name="date" content="2023-02-21" />
 
 <title>The tidy tools manifesto</title>
 
@@ -31,13 +31,13 @@ document.addEventListener('DOMContentLoaded', function(e) {
 </script>
 
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
 
 
 
@@ -239,7 +239,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">The tidy tools manifesto</h1>
 <h4 class="author">Hadley Wickham</h4>
-<h4 class="date">2022-07-06</h4>
+<h4 class="date">2023-02-21</h4>
 
 
 
@@ -287,7 +287,8 @@ this is not possible, create your own using an S3 class built on top of
 an atomic vector or list.</p>
 <p>If you need “non-standard scoping”, where you refer to variables
 inside a data frame as if they are in the global environment, prefer
-tidy evaluation over non-standard evaluation. See the examples in <a href="https://tidyeval.tidyverse.org">Tidy evaluation</a> and <a href="https://adv-r.hadley.nz/meta-big-picture.html">the metaprogramming
+tidy evaluation over non-standard evaluation. See the <a href="https://r4ds.hadley.nz/functions.html#data-frame-functions">Data
+frame functons section in R4DS</a> and <a href="https://adv-r.hadley.nz/meta-big-picture.html">the metaprogramming
 chapters in Advanced R</a> for more details.</p>
 </div>
 <div id="compose-simple-functions-with-the-pipe" class="section level2">

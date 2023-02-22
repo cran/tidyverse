@@ -9,11 +9,19 @@
 #' existing code.
 #'
 #' @export
+#' @param only Set this to a character vector to restrict to conflicts only
+#'   with these packages.
 #' @examples
 #' tidyverse_conflicts()
-tidyverse_conflicts <- function() {
+tidyverse_conflicts <- function(only = NULL) {
   envs <- grep("^package:", search(), value = TRUE)
   envs <- purrr::set_names(envs)
+
+  if (!is.null(only)) {
+    only <- union(only, core)
+    envs <- envs[names(envs) %in% paste0("package:", only)]
+  }
+
   objs <- invert(lapply(envs, ls_env))
 
   conflicts <- purrr::keep(objs, ~ length(.x) > 1)
@@ -28,10 +36,8 @@ tidyverse_conflicts <- function() {
 }
 
 tidyverse_conflict_message <- function(x) {
-  if (length(x) == 0) return("")
-
   header <- cli::rule(
-    left = crayon::bold("Conflicts"),
+    left = cli::style_bold("Conflicts"),
     right = "tidyverse_conflicts()"
   )
 
@@ -39,18 +45,26 @@ tidyverse_conflict_message <- function(x) {
   others <- pkgs %>% purrr::map(`[`, -1)
   other_calls <- purrr::map2_chr(
     others, names(others),
-    ~ paste0(crayon::blue(.x), "::", .y, "()", collapse = ", ")
+    ~ paste0(cli::col_blue(.x), "::", .y, "()", collapse = ", ")
   )
 
   winner <- pkgs %>% purrr::map_chr(1)
-  funs <- format(paste0(crayon::blue(winner), "::", crayon::green(paste0(names(x), "()"))))
+  funs <- format(paste0(cli::col_blue(winner), "::", cli::col_green(paste0(names(x), "()"))))
   bullets <- paste0(
-    crayon::red(cli::symbol$cross), " ", funs,
-    " masks ", other_calls,
+    cli::col_red(cli::symbol$cross), " ", funs, " masks ", other_calls,
     collapse = "\n"
   )
 
-  paste0(header, "\n", bullets)
+  conflicted <- paste0(
+    cli::col_cyan(cli::symbol$info), " ",
+    cli::format_inline("Use the {.href [conflicted package](http://conflicted.r-lib.org/)} to force all conflicts to become errors"
+  ))
+
+  paste0(
+    header, "\n",
+    bullets, "\n",
+    conflicted
+  )
 }
 
 #' @export
@@ -80,8 +94,18 @@ confirm_conflict <- function(packages, name) {
 
 ls_env <- function(env) {
   x <- ls(pos = env)
-  if (identical(env, "package:dplyr")) {
+
+  # intersect, setdiff, setequal, union come from generics
+  if (env %in% c("package:dplyr", "package:lubridate")) {
     x <- setdiff(x, c("intersect", "setdiff", "setequal", "union"))
   }
+
+  if (env == "package:lubridate") {
+    x <- setdiff(x, c(
+      "as.difftime", # lubridate makes into an S4 generic
+      "date"         # matches base behaviour
+    ))
+  }
+
   x
 }

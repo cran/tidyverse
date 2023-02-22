@@ -1,3 +1,16 @@
+# tidyverse 2.0.0
+
+* lubridate is now a member of the core tidyverse (#157)!
+
+* tidyverse now installs ragg (#310).
+
+* Loading the tidyverse now advertises `library(conflicted)` because it 
+  resolves many conflict problems and silences tidyverse's automated report 
+  (#218).
+
+* `tidyverse_sitrep()` correctly displays installed package versions and 
+  highlights development versions of pacakges (#222).
+
 # tidyverse 1.3.2
 
 * Text version of the citation now lists all authors (#269).
